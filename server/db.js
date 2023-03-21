@@ -9,7 +9,7 @@ const connectToDatabase = async () => {
     console.log('Connected to database successfully!');
     return db;
   } catch (err) {
-    console.log(err);
+    console.log(`Error: ${err}`);
   }
 };
 

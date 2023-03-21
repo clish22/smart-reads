@@ -1,19 +1,14 @@
-//api routes
-var express = require('express');
-var router = express.Router();
-var path = require('path');
-var apiController = require('../controllers/apiController');
+/* const express = require('express');
+const router = express.Router();
+const fetchCompletion = require('../utils/gpt');
 
-router.get('/api', apiController.api);
+// use fetchCompletetion to get a response from GPT-3
 
-router.get('/api/notes', apiController.getNotes);
-
-router.post('/api/notes', apiController.postNote);
-
-router.delete('/api/notes/:id', apiController.deleteNote);
-
-router.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+router.post('/api/gpt', async (req, res) => {
+  const { text } = req.body;
+  const feedback = await fetchCompletion(text);
+  res.send({ feedback });
 });
 
 module.exports = router;
+ */

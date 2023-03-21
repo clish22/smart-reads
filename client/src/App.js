@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Feedback from './pages/Feedback';
-import './assets/styles/App.css';
+import './App.css';
 
 //routes for the app
 

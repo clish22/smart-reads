@@ -1,9 +1,10 @@
 //Feedback component page. This page contains a text field for the user to enter their piece of writing. The user can then click the submit button to send the text to the server. The server will then return with feedback on the quality of text sent to the server. The feedback will be displayed in a text field below the submit button. The user can then click the clear button to clear the text field. The user can also click the back button to go back to the home page.
 
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import axios from 'axios';
 import Header from '../components/Header';
+import Button from '../components/Button';
 
 function Feedback() {
   const [text, setText] = useState('');
@@ -13,7 +14,7 @@ function Feedback() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/feedback', { text });
+      const response = await axios.post('http://localhost:3001/api/gpt', { text });
       setFeedback(response.data.feedback);
     } catch (error) {
       console.log(error);
@@ -44,12 +45,8 @@ function Feedback() {
                   onChange={(e) => setText(e.target.value)}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" onClick={handleSubmit}>
-                Submit
-              </Button>
-              <Button variant="primary" type="submit" onClick={handleClear}>
-                Clear
-              </Button>
+              <Button onClick={handleSubmit}>Submit</Button>
+              <Button onClick={handleClear}>Clear</Button>
             </Form>
             <Form>
               <Form.Group controlId="feedback">
