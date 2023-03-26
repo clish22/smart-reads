@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import axios from 'axios';
-import Header from '../components/Header';
+import Navbar from '../components/Navbar';
 import Button from '../components/Button';
 
 function Feedback() {
@@ -30,7 +30,7 @@ function Feedback() {
 
   return (
     <div>
-      <Header />
+      <Navbar />
       <Container className="text-center p-3">
         <Row>
           <Col>
