@@ -1,9 +1,5 @@
-// this is a login page. All other pages can only be accessed if the user is logged in. The user can enter their username and password in the text fields. The user can then click the login button to send the username and password to the server. The server will then return with a message to indicate whether the login was successful or not. The message will be displayed in a text field below the login button. The user can then click the clear button to clear the text fields. The user can also click the back button to go back to the home page.
-
 import React, { useState } from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
 import Button from '../components/Button';
 
 function Login() {
@@ -11,66 +7,82 @@ function Login() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  // function to handle the login button with async
+  // async function to handle the username input and set the username state
+  const handleUsernameChange = (e) => {
+    e.preventDefault();
+    setUsername(e.target.value);
+  };
+
+  // async function to handle the password input and set the password state
+  const handlePasswordChange = (e) => {
+    e.preventDefault();
+    setPassword(e.target.value);
+  };
+
+  // async function to handle the login button and send the username and password to the server
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:3001/api/login', { username, password });
+    const response = await axios.post('http://localhost:3001/api/login', {
+      username: username,
+      password: password,
+    });
+    if (response.data.message === 'Logged in successfully') {
       setMessage(response.data.message);
-    } catch (error) {
-      console.log(error);
+      window.location.href = '/home';
+    } else {
+      setMessage(response.data.message);
     }
   };
 
-  // function to handle the clear button
+  // async function to handle the clear button and clear the text fields
   const handleClear = (e) => {
     e.preventDefault();
     setUsername('');
     setPassword('');
-    setMessage('');
   };
 
   return (
     <div>
-      <Navbar />
-      <Container className="text-center p-3">
-        <Row>
-          <Col>
-            <h1>Login</h1>
-            <h3>Enter your username and password below</h3>
-            <Form>
-              <Form.Group controlId="username">
-                <Form.Control
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="text-center">Login</h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <form>
+              <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <input
                   type="text"
-                  placeholder="Username"
+                  className="form-control"
+                  id="username"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={handleUsernameChange}
                 />
-              </Form.Group>
-              <Form.Group controlId="password">
-                <Form.Control
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
                   type="password"
-                  placeholder="Password"
+                  className="form-control"
+                  id="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handlePasswordChange}
                 />
-              </Form.Group>
-              <Button onClick={handleLogin}>Login</Button>
-              <Button onClick={handleClear}>Clear</Button>
-            </Form>
-            <Form>
-              <Form.Group controlId="message">
-                <Form.Control
-                  type="text"
-                  placeholder="Message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                />
-              </Form.Group>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+              </div>
+              <p className="text-danger">{message}</p>
+              <Button type="submit" variant="primary" className="mr-2" onClick={handleLogin}>
+                Login
+              </Button>
+              <Button type="submit" variant="secondary" onClick={handleClear}>
+                Clear
+              </Button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

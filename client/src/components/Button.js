@@ -3,13 +3,18 @@
 //import
 import React from 'react';
 import './Button.css';
-import { Button as BootstrapButton } from 'react-bootstrap';
+
+//button component with bootstrap styling
 
 function Button(props) {
   return (
-    <BootstrapButton variant="primary" type="submit" onClick={props.onClick}>
+    <button
+      type={props.type}
+      className={`btn btn-${props.variant} ${props.className}`}
+      onClick={props.onClick}
+    >
       {props.children}
-    </BootstrapButton>
+    </button>
   );
 }
 
