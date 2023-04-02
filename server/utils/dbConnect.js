@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 
-const connectToDatabase = async () => {
+const dbConnect = async () => {
   try {
     const url = process.env.MONGODB_URI;
     const dbName = 'nrl-fantasy';
@@ -13,4 +13,4 @@ const connectToDatabase = async () => {
   }
 };
 
-module.exports = connectToDatabase;
+module.exports = dbConnect;

@@ -1,6 +1,6 @@
 const { Configuration, OpenAIApi } = require('openai');
 
-const fetchCompletion = async (content) => {
+const gptChatCompletion = async (content) => {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
@@ -14,4 +14,4 @@ const fetchCompletion = async (content) => {
   return response.data.choices[0].message.content;
 };
 
-module.exports = fetchCompletion;
+module.exports = gptChatCompletion;

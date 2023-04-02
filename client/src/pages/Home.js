@@ -1,11 +1,9 @@
 // basic home page
 import React from 'react';
-import BootstrapNavbar from '../components/Navbar';
 
 function Home() {
   return (
     <div>
-      <BootstrapNavbar />
       <div className="container">
         <div className="row">
           <div className="col-md-12">

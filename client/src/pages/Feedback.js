@@ -1,72 +1,81 @@
 import React, { useState } from 'react';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
-import Button from '../components/Button';
 
-function Feedback() {
-  const [text, setText] = useState('');
+function SubmitStory() {
+  const [story, setStory] = useState('');
+  const [criteria, setCriteria] = useState('');
   const [feedback, setFeedback] = useState('');
 
-  // async function to handle the text input and set the text state
-  const handleTextChange = (e) => {
-    e.preventDefault();
-    setText(e.target.value);
-  };
-
-  // async function to handle the submit button and send the text to the server
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post('http://localhost:3001/api/gpt', { text: text });
-    setFeedback(response.data.feedback);
+    try {
+      const response = await axios.post('http://localhost:3001/api/feedback', {
+        story,
+        criteria,
+      });
+      setFeedback(response.data.feedback);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // async function to handle the clear button and clear the text field
   const handleClear = (e) => {
     e.preventDefault();
-    setText('');
+    setStory('');
+    setCriteria('');
   };
 
   return (
-    <div>
-      <Navbar />
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="text-center">Feedback</h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <form>
-              <div className="form-group">
-                <label htmlFor="text">Please Enter Your Text:</label>
-                <textarea
-                  className="form-control"
-                  id="text"
-                  rows="3"
-                  value={text}
-                  onChange={handleTextChange}
-                />
-              </div>
-              <Button type="submit" variant="primary" className="mr-2" onClick={handleSubmit}>
+    <Container className="w-75 my-4">
+      <Row className="border border-dark rounded justify-content-center">
+        <Col md={12} className="p-3">
+          <h1 className="text-center mb-4">Submit Your Story</h1>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="story">
+              <Form.Label className="fw-bold">Story:</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={10}
+                value={story}
+                onChange={(e) => setStory(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="criteria">
+              <Form.Label className="mt-4 fw-bold">Criteria:</Form.Label>
+              <Form.Control
+                as="select"
+                value={criteria}
+                onChange={(e) => setCriteria(e.target.value)}
+              >
+                <option value="">Select a criteria</option>
+                <option value="Spelling">Spelling</option>
+                <option value="Grammar">Grammar</option>
+                <option value="Punctuation">Punctuation</option>
+                {/* Add more options here */}
+              </Form.Control>
+            </Form.Group>
+            <div className="text-center">
+              <Button variant="primary" type="submit" onClick={handleSubmit}>
                 Submit
               </Button>
-              <Button type="submit" variant="secondary" onClick={handleClear}>
+              <Button variant="warning" type="submit" onClick={handleClear}>
                 Clear
               </Button>
-            </form>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="text-center">Feedback</h1>
-            {/* feedback displayed in a p tag with some fancy bootstrap stylings */}
-            <p className="text-center text-white bg-dark">{feedback}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+      <Row className="justify-content-center my-4">
+        <Col md={6}>
+          <Container>
+            <h1 className="text-center mb-4">Feedback</h1>
+            {feedback && <p className="text-center">{feedback}</p>}
+          </Container>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
-export default Feedback;
+export default SubmitStory;

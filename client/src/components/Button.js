@@ -2,19 +2,16 @@
 
 //import
 import React from 'react';
+import { Button as BootstrapButton } from 'react-bootstrap';
 import './Button.css';
 
 //button component with bootstrap styling
 
 function Button(props) {
   return (
-    <button
-      type={props.type}
-      className={`btn btn-${props.variant} ${props.className}`}
-      onClick={props.onClick}
-    >
+    <BootstrapButton className="button" variant={props.variant} onClick={props.onClick}>
       {props.children}
-    </button>
+    </BootstrapButton>
   );
 }
 
